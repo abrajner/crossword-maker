@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CrosswordPrinter {
-    private Integer crosswordHeight =10;
-    private Integer crosswordWidth = 10;
+    private Integer crosswordHeight;
+    private Integer crosswordWidth;
 
     public Integer getCrosswordHeight() {
         return crosswordHeight;
@@ -24,17 +24,19 @@ public class CrosswordPrinter {
     }
 
 
-    private String[][] createAndFillArrayWithEptySpaces(Integer height, Integer width){
+    public   String[][] createAndFillArrayWithEptySpaces(Integer height, Integer width){
         String[][] array = new String[height][width];
+        this.crosswordHeight = height;
+        this.crosswordWidth = width;
         for (int i = 0; i < crosswordHeight; i++) {
             for (int j = 0; j < crosswordWidth; j++){
-                array[j][i] = " ";
+                array[i][j] = " ";
             }
         }
         return array;
     }
 
-    private void printArray(String [][] array){
+    public void printArray(String [][] array){
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++){
                 System.out.print(array[j][i]);

@@ -16,7 +16,7 @@ public class WordsDefinitionParser {
 
     public WordsDefinitionParser(String fileName) throws IOException {
         openFile(fileName);
-        converteLineToDefinitionWordMap(readFromFile(getDefinitionsFile()));
+        converteLineToDefinitionWordMap(readFromFile(this.definitionsFile));
     }
 
     public void setDefinitionsWords(Map<String, String> definitionsWords) {
@@ -56,7 +56,7 @@ public class WordsDefinitionParser {
         setDefinitionsFile(openFile);
     }
 
-    private List<String> readFromFile(File file) throws IOException {
+    public List<String> readFromFile(File file) throws IOException {
         Reader reader = new FileReader(file);
         BufferedReader buff = new BufferedReader(reader);
         List<String> collectedLines = buff.lines().collect(Collectors.toList());
@@ -65,7 +65,7 @@ public class WordsDefinitionParser {
         return collectedLines;
     }
 
-    private String[] separateWordsAndDefinitions (String lineFromFile){
+    public String[] separateWordsAndDefinitions (String lineFromFile){
         Pattern compiledPattern = Pattern.compile("([^\\s]+)\\s?\\|(.+).*");
         Matcher matcher = compiledPattern.matcher(lineFromFile);
 
@@ -73,17 +73,17 @@ public class WordsDefinitionParser {
         setWord(matcher.group(1));
         setDefinition(matcher.group(2));
 
-        return new String[] {getWord(), getDefinition()};
+        return new String[] {this.word, this.definition};
     }
 
-    private void converteLineToDefinitionWordMap (List<String> linesFromFile){
+    public void converteLineToDefinitionWordMap (List<String> linesFromFile){
         Map<String, String> tempMapperWordsDefinitions = new HashMap<String, String>();
 
         linesFromFile.forEach(line -> {
             separateWordsAndDefinitions(line);
-            tempMapperWordsDefinitions.put(getWord(),getDefinition());
+            tempMapperWordsDefinitions.put(this.word,this.definition);
         });
 
-        setDefinitionsWords(tempMapperWordsDefinitions);
+        this.definitionsWords = tempMapperWordsDefinitions;
     }
 }
